@@ -3,6 +3,8 @@ package com.ifi.dao;
 import com.ifi.model.EmployeeEntity;
 
 import javax.annotation.Resource;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,6 +14,8 @@ import javax.persistence.criteria.Root;
 import javax.transaction.*;
 import java.util.List;
 
+@Stateless
+@Local(EmployeeDAO.class)
 public class EmployeeDAOImp implements EmployeeDAO {
     @PersistenceContext
     EntityManager entityManager;
@@ -61,11 +65,8 @@ public class EmployeeDAOImp implements EmployeeDAO {
     }
 
     @Override
-    public boolean deleteEmployee(EmployeeEntity existEmployee) {
-        if (existEmployee.getId() == null) {
-            return false;
-        }
-        EmployeeEntity employeeFound = entityManager.find(EmployeeEntity.class, existEmployee.getId());
+    public boolean deleteEmployee(int id) {
+        EmployeeEntity employeeFound = entityManager.find(EmployeeEntity.class, id);
         return removeEntity(employeeFound);
     }
 
