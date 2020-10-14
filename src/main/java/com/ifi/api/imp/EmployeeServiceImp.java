@@ -1,13 +1,16 @@
-package com.ifi.service;
+package com.ifi.api.imp;
 
 import com.ifi.dao.EmployeeDAO;
 import com.ifi.model.EmployeeEntity;
+import com.ifi.api.EmployeeService;
 
 import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.List;
 
-@Stateless
+@Stateless(name = "EmployeeService")
+@Remote(EmployeeService.class)
 public class EmployeeServiceImp implements EmployeeService {
     @EJB
     EmployeeDAO employeeDAO;
