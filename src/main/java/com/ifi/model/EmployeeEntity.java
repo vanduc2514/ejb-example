@@ -4,13 +4,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity(name = "abc")
 @Table(name = "employee_data", schema = "ifi_db")
 @Data
 @EqualsAndHashCode
-public class EmployeeEntity {
+public class EmployeeEntity implements Serializable {
+    private static final long serialVersionUID = 25141992L;
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)

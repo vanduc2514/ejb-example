@@ -1,17 +1,18 @@
 package com.ifi.service;
 
-import com.ifi.dto.EmployeeDTO;
+
+import com.ifi.model.EmployeeEntity;
 
 import javax.ejb.Remote;
 import java.util.List;
 
 @Remote
 public interface EmployeeService {
-    List<EmployeeDTO> getAllEmployee();
+    List<EmployeeEntity> getAllEmployee();
 
-    EmployeeDTO addNewEmployee(EmployeeDTO newEmployeeDTO);
+    EmployeeEntity addNewEmployee(EmployeeEntity newEmployeeDTO);
 
-    EmployeeDTO updateEmployee(EmployeeDTO existEmployeeDTO);
+    EmployeeEntity updateEmployee(EmployeeEntity existEmployeeDTO);
 
     boolean deleteEmployee(int id);
 }
