@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import java.util.List;
 
 @Stateless(name = "EmployeeService")
-@Remote(EmployeeService.class)
 public class EmployeeServiceImp implements EmployeeService {
     @EJB
     EmployeeDAO employeeDAO;

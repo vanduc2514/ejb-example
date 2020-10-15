@@ -3,8 +3,10 @@ package com.ifi.api;
 
 import com.ifi.model.EmployeeEntity;
 
+import javax.ejb.Remote;
 import java.util.List;
 
+@Remote
 public interface EmployeeService {
     List<EmployeeEntity> getAllEmployee();
 

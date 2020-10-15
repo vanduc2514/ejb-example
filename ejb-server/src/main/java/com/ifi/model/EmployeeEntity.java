@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 @Entity(name = "abc")
 @Table(name = "employee_data", schema = "ifi_db")
 @Data
-@EqualsAndHashCode
 public class EmployeeEntity implements Serializable {
     private static final long serialVersionUID = 25141992L;
 
