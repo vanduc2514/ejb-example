@@ -25,22 +25,22 @@ public class App {
             "3. Update Exist Employee",
             "4. Delete Employee",
             "5. Exit");
-    static final String USER_CHOICE_PROMPT = "Enter your choice: ";
-    static final String ERROR_MESSAGE_INPUT = "Please enter a number!";
     static final String STYLE_RESET = "\033[0m";
     static final String STYLE_YELLOW_BOLD = "\033[1;33m";
     static final String STYLE_RED = "\033[0;31m";
-    static final String ERROR_MESSAGE_INPUT_DATE = "Date is incorrect format!";
-    static final String SUCCESS_MESSAGE_ADDNEW = "Employee Added";
-    static final String ERROR_MESSAGE_SERVER = "Something wrong Happened! Please try again";
+    static final String MESSAGE_NO_DATA = "no data";
+    static final String PROMPT_MESSAGE_CHOICE = "Enter your choice: ";
     static final String PROMPT_MESSAGE_NAME = "Enter Employee's name: ";
     static final String PROMPT_MESSAGE_EMAIL = "Enter Employee's email: ";
     static final String PROMPT_MESSAGE_DOB = "Enter Employee's DOB";
     static final String PROMPT_MESSAGE_JOINED_DATE = "Enter Employee's Joined Date";
     static final String PROMPT_MESSAGE_ID = "Enter Employee's ID: ";
+    static final String SUCCESS_MESSAGE_ADD = "Employee Added";
     static final String SUCCESS_MESSAGE_UPDATE = "Employee Updated";
-    static final String MESSAGE_NO_DATA = "no data";
     static final String SUCCESS_MESSAGE_DELETE = "Employee Deleted";
+    static final String ERROR_MESSAGE_INPUT_NUMBER = "Please enter a number!";
+    static final String ERROR_MESSAGE_INPUT_DATE = "Date is incorrect format!";
+    static final String ERROR_MESSAGE_SERVER = "Something wrong Happened! Please try again";
 
     private static EmployeeService employeeService;
 
@@ -77,12 +77,12 @@ public class App {
             drawMenu();
 
             while (true) {
-                System.out.print(USER_CHOICE_PROMPT);
+                System.out.print(PROMPT_MESSAGE_CHOICE);
                 try {
                     choice = scanner.nextInt();
                     break;
                 } catch (InputMismatchException e) {
-                    System.out.println(STYLE_RED + ERROR_MESSAGE_INPUT + STYLE_RESET);
+                    System.out.println(STYLE_RED + ERROR_MESSAGE_INPUT_NUMBER + STYLE_RESET);
                     scanner.nextLine();
                 }
             }
@@ -102,7 +102,7 @@ public class App {
                     updateEmployeeData(scanner, employeeAdd);
                     EmployeeEntity added = employeeService.addNewEmployee(employeeAdd);
                     if (Objects.nonNull(added)) {
-                        System.out.println(SUCCESS_MESSAGE_ADDNEW);
+                        System.out.println(SUCCESS_MESSAGE_ADD);
                     } else {
                         System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVER);
                     }
