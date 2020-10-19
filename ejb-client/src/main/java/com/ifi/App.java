@@ -1,12 +1,17 @@
 package com.ifi;
 
 import com.ifi.api.EmployeeService;
+import com.ifi.model.EmployeeEntity;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class App {
@@ -23,6 +28,11 @@ public class App {
     static final String USER_CHOICE_PROMPT = "Enter your choice: ";
     static final String ERROR_MESSAGE_INPUT = "Please enter a number!";
     static final String STYLE_RESET = "\033[0m";
+    static final String STYLE_YELLOW_BOLD = "\033[1;33m";
+    static final String STYLE_RED = "\033[0;31m";
+    static final String ERROR_MESSAGE_INPUT_DATE = "Date is incorrect format!";
+    static final String SUCCESS_MESSAGE_ADDNEW = "Employee Added";
+    static final String ERROR_MESSAGE_ADDNEW = "Something wrong Happened! Please try again";
 
     private static EmployeeService employeeService;
 
@@ -54,7 +64,6 @@ public class App {
         }
 
         Scanner scanner = new Scanner(System.in);
-        final String STYLE_RED = "\033[0;31m";
         while (true) {
             int choice;
             drawMenu();
@@ -71,23 +80,60 @@ public class App {
             if (choice == 5) {
                 break;
             }
+            scanner.nextLine();
             switch (choice) {
                 case 1:
                     getAllEmployee();
                     break;
                 case 2:
-                    addNewEmployee();
+                    EmployeeEntity employee = new EmployeeEntity();
+                    updateEmployee(scanner, employee);
+                    EmployeeEntity added = employeeService.addNewEmployee(employee);
+                    if (Objects.nonNull(added)) {
+                        System.out.println(SUCCESS_MESSAGE_ADDNEW);
+                    } else {
+                        System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_ADDNEW);
+                    }
                     break;
             }
         }
     }
 
-    private static void addNewEmployee() {
+    private static void updateEmployee(Scanner scanner, EmployeeEntity employeeEntity) {
+        String datePattern = "dd-MM-yyyy";
+        System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's name: ");
+        employeeEntity.setName(scanner.nextLine());
+        System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's email: ");
+        employeeEntity.setEmail(scanner.nextLine());
 
+        LocalDate dob;
+        while (true) {
+            try {
+                System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's DOB (" + datePattern + "): ");
+                dob = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern(datePattern));
+                employeeEntity.setJoinedDate(Timestamp.valueOf(dob.atStartOfDay()));
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.print(STYLE_RED + "Date is incorrect format!" + STYLE_RESET);
+                scanner.nextLine();
+            }
+        }
+
+        LocalDate joinedDate;
+        while (true) {
+            try {
+                System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's Joined Date (" + datePattern + "): ");
+                joinedDate = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern(datePattern));
+                employeeEntity.setJoinedDate(Timestamp.valueOf(joinedDate.atStartOfDay()));
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.print(STYLE_RED + ERROR_MESSAGE_INPUT_DATE + STYLE_RESET);
+                scanner.nextLine();
+            }
+        }
     }
 
     private static void getAllEmployee() {
-        final String STYLE_YELLOW_BOLD = "\033[1;33m";
         final String STYLE_SPACING = "%n %-5s %-15s %-25s %-15s %-15s";
         final String STYLE_CYAN_REGULAR = "\033[0;36m";
 
