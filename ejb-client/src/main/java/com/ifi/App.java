@@ -194,7 +194,7 @@ public class App {
         int center = (width - CLIENT_TITLE.length()) / 2;
         System.out.print(dot);
         drawHorizontalBorder(center, whiteSpace);
-        System.out.print(CLIENT_TITLE);
+        System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, CLIENT_TITLE);
         drawHorizontalBorder(center - 1, whiteSpace);
         System.out.println(dot);
         drawHorizontalBorder(width, dot);
