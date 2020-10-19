@@ -131,7 +131,7 @@ public class App {
             try {
                 System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_DOB + " (" + datePattern + "): ");
                 dob = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern(datePattern));
-                employeeEntity.setJoinedDate(Timestamp.valueOf(dob.atStartOfDay()));
+                employeeEntity.setDateOfBirth(Timestamp.valueOf(dob.atStartOfDay()));
                 break;
             } catch (DateTimeParseException e) {
                 System.out.print(STYLE_RED + ERROR_MESSAGE_INPUT_DATE + STYLE_RESET);
