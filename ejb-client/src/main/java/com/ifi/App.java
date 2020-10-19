@@ -76,9 +76,35 @@ public class App {
                     getAllEmployee();
                     break;
                 case 2:
+                    addNewEmployee();
                     break;
             }
         }
+    }
+
+    private static void addNewEmployee() {
+
+    }
+
+    private static void getAllEmployee() {
+        final String STYLE_YELLOW_BOLD = "\033[1;33m";
+        final String STYLE_SPACING = "%n %-5s %-15s %-25s %-15s %-15s";
+        final String STYLE_CYAN_REGULAR = "\033[0;36m";
+
+        String title = String.format(STYLE_YELLOW_BOLD + STYLE_SPACING + STYLE_RESET, "ID", "Name", "Email", "DOB", "Join Date");
+        System.out.print(title);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        employeeService.getAllEmployee().forEach(employeeEntity -> {
+            String content = String.format(STYLE_CYAN_REGULAR + STYLE_SPACING + STYLE_RESET,
+                    employeeEntity.getId(),
+                    employeeEntity.getName(),
+                    employeeEntity.getEmail(),
+                    dateFormat.format(employeeEntity.getDateOfBirth()),
+                    dateFormat.format(employeeEntity.getJoinedDate()));
+            System.out.print(content);
+        });
+        System.out.printf("%n");
     }
 
     private static void drawMenu() {
@@ -106,6 +132,7 @@ public class App {
             }
             System.out.printf("%s %n", dot);
         });
+
         drawHorizontalBorder(width, dot);
         System.out.printf("%n");
     }
@@ -114,26 +141,5 @@ public class App {
         for (int i = 0; i < i2; i++) {
             System.out.print(s);
         }
-    }
-
-    private static void getAllEmployee() {
-        final String STYLE_YELLOW_BOLD = "\033[1;33m";
-        final String STYLE_SPACING = "%n %-5s %-15s %-25s %-15s %-15s";
-        final String STYLE_CYAN_REGULAR = "\033[0;36m";
-
-        String title = String.format(STYLE_YELLOW_BOLD + STYLE_SPACING + STYLE_RESET, "ID", "Name", "Email", "DOB", "Join Date");
-        System.out.print(title);
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        employeeService.getAllEmployee().forEach(employeeEntity -> {
-            String content = String.format(STYLE_CYAN_REGULAR + STYLE_SPACING + STYLE_RESET,
-                    employeeEntity.getId(),
-                    employeeEntity.getName(),
-                    employeeEntity.getEmail(),
-                    dateFormat.format(employeeEntity.getDateOfBirth()),
-                    dateFormat.format(employeeEntity.getJoinedDate()));
-            System.out.print(content);
-        });
-        System.out.printf("%n");
     }
 }
