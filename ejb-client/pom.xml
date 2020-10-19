@@ -15,6 +15,14 @@
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
+    <repositories>
+        <repository>
+            <id>client-lib</id>
+            <name>Remote Bean Client Library</name>
+            <url>file://${project.basedir}/libs</url>
+        </repository>
+    </repositories>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -27,6 +35,12 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ifi</groupId>
+            <artifactId>ejb-server</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb-client</type>
         </dependency>
     </dependencies>
 
