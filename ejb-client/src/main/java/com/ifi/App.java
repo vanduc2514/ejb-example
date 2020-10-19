@@ -40,6 +40,7 @@ public class App {
     static final String PROMPT_MESSAGE_ID = "Enter Employee's ID: ";
     static final String SUCCESS_MESSAGE_UPDATE = "Employee Updated";
     static final String MESSAGE_NO_DATA = "no data";
+    static final String SUCCESS_MESSAGE_DELETE = "Employee Deleted";
 
     private static EmployeeService employeeService;
 
@@ -88,6 +89,7 @@ public class App {
                 break;
             }
             scanner.nextLine();
+            int id;
             switch (choice) {
                 case 1:
                     getAllEmployee();
@@ -105,13 +107,22 @@ public class App {
                 case 3:
                     EmployeeEntity employeeUpdate = new EmployeeEntity();
                     System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_ID);
-                    int id = scanner.nextInt();
+                    id = scanner.nextInt();
                     employeeUpdate.setId(id);
                     scanner.next();
                     updateEmployeeData(scanner, employeeUpdate);
                     EmployeeEntity updated = employeeService.updateEmployee(employeeUpdate);
                     if (Objects.nonNull(updated)) {
                         System.out.println(SUCCESS_MESSAGE_UPDATE);
+                    } else {
+                        System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVER);
+                    }
+                    break;
+                case 4:
+                    System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_ID);
+                    id = scanner.nextInt();
+                    if (employeeService.deleteEmployee(id)) {
+                        System.out.println(SUCCESS_MESSAGE_DELETE);
                     } else {
                         System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVER);
                     }
