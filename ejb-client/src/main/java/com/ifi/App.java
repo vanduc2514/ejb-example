@@ -41,18 +41,20 @@ public class App {
     static final String ERROR_MESSAGE_INPUT_NUMBER = "Please enter a number!";
     static final String ERROR_MESSAGE_INPUT_DATE = "Date is incorrect format!";
     static final String ERROR_MESSAGE_SERVER = "Something wrong Happened! Please try again";
+    static final String ERROR_MESSAGE_SERVICE_BEAN_NOT_FOUND = "ERROR: Bean Not Found";
 
     private static EmployeeService employeeService;
 
+
     static {
         try {
-            employeeService = lookUpEmployeeServiceBean();
+            employeeService = lookUpEmployeeServiceBeanFromServer();
         } catch (NamingException e) {
-            e.printStackTrace();
+            System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVICE_BEAN_NOT_FOUND);
         }
     }
 
-    private static EmployeeService lookUpEmployeeServiceBean() throws NamingException {
+    private static EmployeeService lookUpEmployeeServiceBeanFromServer() throws NamingException {
         final Properties jndiProps = createJNDIProperties();
         final Context context = new InitialContext(jndiProps);
         return (EmployeeService) context.lookup(EJB_JNDI_NAME);
@@ -66,11 +68,6 @@ public class App {
     }
 
     public static void main(String[] args) {
-        if (Objects.isNull(employeeService)) {
-            System.err.println("ERROR: Bean Not Found");
-            return;
-        }
-
         Scanner scanner = new Scanner(System.in);
         while (true) {
             int choice;
