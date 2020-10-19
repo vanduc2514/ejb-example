@@ -32,19 +32,18 @@ public class App {
     static final String PROMPT_MESSAGE_CHOICE = "Enter your choice: ";
     static final String PROMPT_MESSAGE_NAME = "Enter Employee's name: ";
     static final String PROMPT_MESSAGE_EMAIL = "Enter Employee's email: ";
-    static final String PROMPT_MESSAGE_DOB = "Enter Employee's DOB";
-    static final String PROMPT_MESSAGE_JOINED_DATE = "Enter Employee's Joined Date";
+    static final String PROMPT_MESSAGE_DOB = "Enter Employee's birth day";
+    static final String PROMPT_MESSAGE_JOINED_DATE = "Enter Employee's joined date";
     static final String PROMPT_MESSAGE_ID = "Enter Employee's ID: ";
     static final String SUCCESS_MESSAGE_ADD = "Employee Added";
     static final String SUCCESS_MESSAGE_UPDATE = "Employee Updated";
     static final String SUCCESS_MESSAGE_DELETE = "Employee Deleted";
     static final String ERROR_MESSAGE_INPUT_NUMBER = "Please enter a number!";
     static final String ERROR_MESSAGE_INPUT_DATE = "Date is incorrect format!";
-    static final String ERROR_MESSAGE_SERVER = "Something wrong Happened! Please try again";
-    static final String ERROR_MESSAGE_SERVICE_BEAN_NOT_FOUND = "ERROR: Bean Not Found";
+    static final String ERROR_MESSAGE_SERVER = "Something wrong happened! Please try again";
+    static final String ERROR_MESSAGE_SERVICE_BEAN_NOT_FOUND = "ERROR: Service Bean Not Found";
 
     private static EmployeeService employeeService;
-
 
     static {
         try {
@@ -55,16 +54,11 @@ public class App {
     }
 
     private static EmployeeService lookUpEmployeeServiceBeanFromServer() throws NamingException {
-        final Properties jndiProps = createJNDIProperties();
-        final Context context = new InitialContext(jndiProps);
-        return (EmployeeService) context.lookup(EJB_JNDI_NAME);
-    }
-
-    private static Properties createJNDIProperties() {
         Properties jndiProps = new Properties();
         jndiProps.put(Context.URL_PKG_PREFIXES, EJB_CLIENT_NAMING);
         jndiProps.put(Context.PROVIDER_URL, EJB_SERVER_ADDRESS);
-        return jndiProps;
+        final Context context = new InitialContext(jndiProps);
+        return (EmployeeService) context.lookup(EJB_JNDI_NAME);
     }
 
     public static void main(String[] args) {
@@ -171,7 +165,7 @@ public class App {
         final String STYLE_SPACING = "%n %-5s %-15s %-25s %-15s %-15s";
         final String STYLE_CYAN_REGULAR = "\033[0;36m";
 
-        String title = String.format(STYLE_YELLOW_BOLD + STYLE_SPACING + STYLE_RESET, "ID", "Name", "Email", "DOB", "Join Date");
+        String title = String.format(STYLE_YELLOW_BOLD + STYLE_SPACING + STYLE_RESET, "ID", "Name", "Email", "Birth Day", "Joined Date");
         System.out.print(title);
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
