@@ -32,7 +32,13 @@ public class App {
     static final String STYLE_RED = "\033[0;31m";
     static final String ERROR_MESSAGE_INPUT_DATE = "Date is incorrect format!";
     static final String SUCCESS_MESSAGE_ADDNEW = "Employee Added";
-    static final String ERROR_MESSAGE_ADDNEW = "Something wrong Happened! Please try again";
+    static final String ERROR_MESSAGE_SERVER = "Something wrong Happened! Please try again";
+    static final String PROMPT_MESSAGE_NAME = "Enter Employee's name: ";
+    static final String PROMPT_MESSAGE_EMAIL = "Enter Employee's email: ";
+    static final String PROMPT_MESSAGE_DOB = "Enter Employee's DOB";
+    static final String PROMPT_MESSAGE_JOINED_DATE = "Enter Employee's Joined Date";
+    static final String PROMPT_MESSAGE_ID = "Enter Employee's ID: ";
+    static final String SUCCESS_MESSAGE_UPDATE = "Employee Updated";
 
     private static EmployeeService employeeService;
 
@@ -86,35 +92,49 @@ public class App {
                     getAllEmployee();
                     break;
                 case 2:
-                    EmployeeEntity employee = new EmployeeEntity();
-                    updateEmployee(scanner, employee);
-                    EmployeeEntity added = employeeService.addNewEmployee(employee);
+                    EmployeeEntity employeeAdd = new EmployeeEntity();
+                    updateEmployeeData(scanner, employeeAdd);
+                    EmployeeEntity added = employeeService.addNewEmployee(employeeAdd);
                     if (Objects.nonNull(added)) {
                         System.out.println(SUCCESS_MESSAGE_ADDNEW);
                     } else {
-                        System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_ADDNEW);
+                        System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVER);
+                    }
+                    break;
+                case 3:
+                    EmployeeEntity employeeUpdate = new EmployeeEntity();
+                    System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_ID);
+                    int id = scanner.nextInt();
+                    employeeUpdate.setId(id);
+                    scanner.next();
+                    updateEmployeeData(scanner, employeeUpdate);
+                    EmployeeEntity updated = employeeService.updateEmployee(employeeUpdate);
+                    if (Objects.nonNull(updated)) {
+                        System.out.println(SUCCESS_MESSAGE_UPDATE);
+                    } else {
+                        System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVER);
                     }
                     break;
             }
         }
     }
 
-    private static void updateEmployee(Scanner scanner, EmployeeEntity employeeEntity) {
+    private static void updateEmployeeData(Scanner scanner, EmployeeEntity employeeEntity) {
         String datePattern = "dd-MM-yyyy";
-        System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's name: ");
+        System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_NAME);
         employeeEntity.setName(scanner.nextLine());
-        System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's email: ");
+        System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_EMAIL);
         employeeEntity.setEmail(scanner.nextLine());
 
         LocalDate dob;
         while (true) {
             try {
-                System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's DOB (" + datePattern + "): ");
+                System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_DOB + " (" + datePattern + "): ");
                 dob = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern(datePattern));
                 employeeEntity.setJoinedDate(Timestamp.valueOf(dob.atStartOfDay()));
                 break;
             } catch (DateTimeParseException e) {
-                System.out.print(STYLE_RED + "Date is incorrect format!" + STYLE_RESET);
+                System.out.print(STYLE_RED + ERROR_MESSAGE_INPUT_DATE + STYLE_RESET);
                 scanner.nextLine();
             }
         }
@@ -122,7 +142,7 @@ public class App {
         LocalDate joinedDate;
         while (true) {
             try {
-                System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, "Enter Employee's Joined Date (" + datePattern + "): ");
+                System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_JOINED_DATE + " (" + datePattern + "): ");
                 joinedDate = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern(datePattern));
                 employeeEntity.setJoinedDate(Timestamp.valueOf(joinedDate.atStartOfDay()));
                 break;
