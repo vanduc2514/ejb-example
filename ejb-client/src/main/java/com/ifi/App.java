@@ -39,6 +39,7 @@ public class App {
     static final String PROMPT_MESSAGE_JOINED_DATE = "Enter Employee's Joined Date";
     static final String PROMPT_MESSAGE_ID = "Enter Employee's ID: ";
     static final String SUCCESS_MESSAGE_UPDATE = "Employee Updated";
+    static final String MESSAGE_NO_DATA = "no data";
 
     private static EmployeeService employeeService;
 
@@ -166,8 +167,10 @@ public class App {
                     employeeEntity.getId(),
                     employeeEntity.getName(),
                     employeeEntity.getEmail(),
-                    dateFormat.format(employeeEntity.getDateOfBirth()),
-                    dateFormat.format(employeeEntity.getJoinedDate()));
+                    Objects.nonNull(employeeEntity.getDateOfBirth())
+                            ? dateFormat.format(employeeEntity.getDateOfBirth()) : MESSAGE_NO_DATA,
+                    Objects.nonNull(employeeEntity.getJoinedDate())
+                            ? dateFormat.format(employeeEntity.getJoinedDate()) : MESSAGE_NO_DATA);
             System.out.print(content);
         });
         System.out.printf("%n");
