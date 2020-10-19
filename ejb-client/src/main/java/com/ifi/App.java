@@ -52,13 +52,14 @@ public class App {
         final String STYLE_YELLOW_BOLD = "\033[1;33m";
         final String STYLE_RESET = "\033[0m";
         final String STYLE_SPACING = "%n %-5s %-15s %-25s %-15s %-15s";
+        final String STYLE_CYAN_REGULAR = "\033[0;36m";
 
         String title = String.format(STYLE_YELLOW_BOLD + STYLE_SPACING + STYLE_RESET, "ID", "Name", "Email", "DOB", "Join Date");
         System.out.print(title);
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         employeeService.getAllEmployee().forEach(employeeEntity -> {
-            String content = String.format("\033[0;36m" + STYLE_SPACING + STYLE_RESET,
+            String content = String.format(STYLE_CYAN_REGULAR + STYLE_SPACING + STYLE_RESET,
                     employeeEntity.getId(),
                     employeeEntity.getName(),
                     employeeEntity.getEmail(),
