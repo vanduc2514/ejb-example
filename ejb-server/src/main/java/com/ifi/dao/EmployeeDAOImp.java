@@ -5,6 +5,8 @@ import com.ifi.model.EmployeeEntity;
 import javax.annotation.Resource;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @Stateless
 @Local(EmployeeDAO.class)
+@TransactionManagement(TransactionManagementType.BEAN)
 public class EmployeeDAOImp implements EmployeeDAO {
     @PersistenceContext
     EntityManager entityManager;

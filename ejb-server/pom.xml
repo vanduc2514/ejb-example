@@ -62,6 +62,9 @@
                         <clientInclude>
                             **/api/**
                         </clientInclude>
+                        <clientInclude>
+                            **/model/**
+                        </clientInclude>
                     </clientIncludes>
                 </configuration>
             </plugin>
