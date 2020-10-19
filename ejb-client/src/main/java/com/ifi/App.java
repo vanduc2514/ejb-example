@@ -75,6 +75,7 @@ public class App {
         while (true) {
             int choice;
             drawMenu();
+
             while (true) {
                 System.out.print(USER_CHOICE_PROMPT);
                 try {
@@ -88,12 +89,14 @@ public class App {
             if (choice == 5) {
                 break;
             }
+
             scanner.nextLine();
             int id;
             switch (choice) {
                 case 1:
                     getAllEmployee();
                     break;
+
                 case 2:
                     EmployeeEntity employeeAdd = new EmployeeEntity();
                     updateEmployeeData(scanner, employeeAdd);
@@ -104,6 +107,7 @@ public class App {
                         System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVER);
                     }
                     break;
+
                 case 3:
                     EmployeeEntity employeeUpdate = new EmployeeEntity();
                     System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_ID);
@@ -118,6 +122,7 @@ public class App {
                         System.out.printf(STYLE_RED + "%s" + STYLE_RESET, ERROR_MESSAGE_SERVER);
                     }
                     break;
+
                 case 4:
                     System.out.printf(STYLE_YELLOW_BOLD + "%s" + STYLE_RESET, PROMPT_MESSAGE_ID);
                     id = scanner.nextInt();
